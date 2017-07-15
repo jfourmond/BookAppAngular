@@ -90,7 +90,7 @@ function treatmentAuthors(authors) {
 /*	APP	*/
 var bookApp = angular.module("BookApp", []);
 bookApp.controller('BookCtrl', function ($scope, $http) {
-	// INITIALISATION AVEC TROIS LIVES
+	// INITIALISATION OU CHARGEMENT DES DONNEES
 	if(localStorage.getItem('books') != null) {
 		var objs = [];
 		for(var obj of JSON.parse(localStorage.getItem('books'))){
@@ -101,7 +101,6 @@ bookApp.controller('BookCtrl', function ($scope, $http) {
 	} else {
 		$scope.books = [ ];
 	}
-
 	// AJOUT D'UN LIVRE
 	$scope.addBook = function () {
 		if($scope.addBookForm.$valid) {
