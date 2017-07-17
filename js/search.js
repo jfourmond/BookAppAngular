@@ -1,9 +1,10 @@
 'use strict';
 
+/*	PROGRESS BAR	*/
+var spinner = document.querySelector("#spinner");
+
 /*	CONTROLLER	*/
-bookApp.controller('SearchCtrl', function ($scope, $http) {
-	/*	PROGRESS BAR	*/
-	var spinner = document.querySelector("#spinner");
+angular.module("BookApp").controller('SearchCtrl', function ($scope, $http) {
 	// INITIALISATION
 	$scope.books = [ ];
 	$scope.search = function() {
