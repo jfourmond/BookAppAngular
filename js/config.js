@@ -62,13 +62,16 @@ var bookApp = angular.module("BookApp", ["ngRoute"]);
 bookApp.config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider
-			.when("/", {
-				templateUrl : "templates/library.html",
+			.when("/home", {
+				templateUrl : "index.html",
 				controller : "LibraryCtrl"
 			})
 			.when("/search", {
-				templateUrl : "templates/search.html",
+				templateUrl : "search.html",
 				controller : "SearchCtrl"
-			});
+			})
+			.otherwise({
+				redirectTo: '/home'
+			});;
 	}
 ]);
