@@ -1,21 +1,5 @@
 'use strict';
 
-/*	CLASSE	*/
-class Book {
-	constructor(isbn, title, author, publisher, publishedDate, description, pageCount, thumbnail, favorite, addedDate) {
-		this.isbn = isbn;
-		this.title = title;
-		this.author = author;
-		this.publisher = publisher;
-		this.publishedDate = publishedDate;
-		this.description = description;
-		this.pageCount = pageCount;
-		this.thumbnail = thumbnail;
-		this.favorite = favorite;
-		this.addedDate = addedDate;
-	}
-}
-
 /*	PROGRESS BAR */
 var spinner = document.querySelector("#spinner");
 
@@ -23,15 +7,6 @@ var spinner = document.querySelector("#spinner");
 var snackbar = document.querySelector('#snackbar');
 
 /*	DIALOG	*/
-var addDialog = document.querySelector('#add-dialog');
-var addButton = document.querySelector('#add-button');
-if(!addDialog.showModal)
-	dialogPolyfill.registerDialog(addDialog);
-addButton.addEventListener('click', function() { addDialog.showModal(); });
-addDialog.querySelector('.close').addEventListener('click', function() {
-	addDialog.close();
-});
-
 var recordDialog = document.querySelector('#record-dialog');
 if(!recordDialog.showModal)
 	dialogPolyfill.registerDialog(recordDialog);
@@ -39,50 +14,7 @@ recordDialog.querySelector(".close").addEventListener('click', function() {
 	recordDialog.close();
 })
 
-/*	TRAITEMENT DES DONNEES	*/
-function treatmentItems(items) {
-	// console.log(items);
-	var volume = items[0].volumeInfo;
-	var isbn = treatmentISBN13(volume.industryIdentifiers);
-	var title = volume.title;
-	var author = treatmentAuthors(volume.authors);
-	var publisher = volume.publisher;
-	var publishedDate = volume.publishedDate;
-	var description = volume.description;
-	var pageCount = volume.pageCount;
-	var thumbnail = volume.imageLinks.thumbnail;
-	var favorite = false;
-	var addedDate = new Date();
-	return new Book(isbn, title, author, publisher, publishedDate, description, pageCount, thumbnail, favorite, addedDate);
-}
-
-function treatmentISBN13(industryIdentifiers) {
-	var isbn;
-	for(var id of industryIdentifiers)
-		if(id.type == "ISBN_13")
-			isbn = id.identifier;
-	return isbn;
-}
-
-function treatmentAuthors(authors) {
-	var author = authors[0];
-	for(var i=1; i < authors.size ; i++)
-		author = author + ", " + authors[i];
-	return author;
-}
-
-
-/*	APP	*/
-var bookApp = angular.module("BookApp", ["ngRoute"]);
-bookApp.config(['$routeProvider',
-	function($routeProvider) {
-		$routeProvider
-			.when("/", {
-				templateUrl : "index.html"
-			});
-	}
-]);
-bookApp.controller('BookCtrl', function ($scope, $http) {
+bookApp.controller('LibraryCtrl', function ($scope, $http) {
 	// INITIALISATION OU CHARGEMENT DES DONNEES
 	if(localStorage.getItem('books') != null) {
 		var objs = [];

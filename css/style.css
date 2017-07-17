@@ -43,3 +43,16 @@
 	margin-right: 3px;
 	margin-left: 3px;
 }
+
+/**	STYLE : search.html	**/
+#isbn-menu > div {
+	text-align: center;
+}
+
+#isbn-menu > div > div {
+	top: 25%;
+}
+
+#info-search {
+	text-align:center
+}
