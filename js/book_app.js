@@ -16,21 +16,6 @@ class Book {
 	}
 }
 
-var b1 = new Book("9780545010221", "Harry Potter and the Deathly Hallows", "J. K. Rowling", "Arthur a Levine",
-	2007, "The magnificent final book in J. K. Rowling's seven-part saga comes to readers July 21, 2007. You'll find out July 21!",
-	759, "http://books.google.com/books/content?id=GZAoAQAAIAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api", true, new Date()
-);
-
-var b2 = new Book("9781551927282", "Harry Potter and the Philosopher's Stone", "J. K. Rowling", null , "2004-10-04",
-	"Funny, imaginative, magical ... Rowling has woken up a whole generation to reading. In the 2020s, thirty-something book-lovers will know each other by smug references to Diagon Alley and Quidditch.",
-	336, null, false, new Date()
-);
-
-var b3 = new Book("9782857046837", "La citadelle des ombres", "Robin Hobb", "Pygmalion Editions", "2001-03-03",
-	"Aujourd'hui, en France et à l'étranger, La Citadelle des Ombres est unanimement salué comme l'un des chefs-d'œuvre de la littérature fantastique du XXe siècle, à tel point que certains le comparent au Seigneur des anneaux de J. R. R. Tolkien.",
-	898, null, false, new Date()
-);
-
 /*	PROGRESS BAR */
 var spinner = document.querySelector("#spinner");
 
@@ -88,7 +73,15 @@ function treatmentAuthors(authors) {
 
 
 /*	APP	*/
-var bookApp = angular.module("BookApp", []);
+var bookApp = angular.module("BookApp", ["ngRoute"]);
+bookApp.config(['$routeProvider',
+	function($routeProvider) {
+		$routeProvider
+			.when("/home", {
+				templateUrl : "index.html"
+			});
+	}
+]);
 bookApp.controller('BookCtrl', function ($scope, $http) {
 	// INITIALISATION OU CHARGEMENT DES DONNEES
 	if(localStorage.getItem('books') != null) {
