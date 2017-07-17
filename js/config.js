@@ -58,7 +58,7 @@ function treatmentAuthors(authors) {
 }
 
 /*	APP	*/
-var bookApp = angular.module("BookApp", ["ngRoute", "routeAppControllers"]);
+var bookApp = angular.module("BookApp", ["ngRoute"]);
 // var routeAppControllers = angular.module("routeAppControllers", []);
 bookApp.config(['$routeProvider',
 	function($routeProvider) {
