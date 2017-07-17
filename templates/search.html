@@ -1,0 +1,89 @@
+
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	<header class="mdl-layout__header mdl-layout__header--scroll">
+		<div class="mdl-layout__header-row">
+			<span class="mdl-layout-title">Ma Bibliothèque - Recherche</span>
+			<div class="mdl-layout-spacer"></div>
+			<nav class="mdl-navigation">
+				<div id="search-box" class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label menu-button">
+					<label class="mdl-button mdl-js-button mdl-button--icon" for="search_waterfall">
+						<i class="material-icons">search</i>
+					</label>
+					<div class="mdl-textfield__expandable-holder">
+						<input class="mdl-textfield__input" type="text" name="search" id="search_waterfall" ng-model="searchText">
+					</div>
+				</div>
+				<button id="sort-menu" class="mdl-button mdl-js-button mdl-button--icon menu-button">
+					<i class="material-icons">sort</i>
+				</button>
+				<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="sort-menu">
+					<li class="mdl-menu__item" ng-click="sort('author')">Auteur</li>
+					<li class="mdl-menu__item" ng-click="sort('publisher')">Editeur</li>
+					<li class="mdl-menu__item" ng-click="sort('title')">Titre</li>
+				</ul>
+				<button id="more-menu" class="mdl-button mdl-js-button mdl-button--icon menu-button">
+					<i class="material-icons">more_vert</i>
+				</button>
+				<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="more-menu">
+					<li class="mdl-menu__item" ng-click="clear()">Vider</li>
+					<li class="mdl-menu__item" ng-click="exportLibrary()">Exporter</li>
+					<label class="mdl-menu__item">
+						Importer <input id="import-file" type="file" style="display: none;" accept=".json" onchange="angular.element(this).scope().onFileImported(this)">
+					</label>
+				</ul>
+			</nav>
+		</div>
+	</header>
+	<div class="mdl-layout__drawer">
+		<span class="mdl-layout-title">Menu</span>
+		<nav class="mdl-navigation">
+			<a class="mdl-navigation__link" href="#/home">Bibliothèque</a>
+		</nav>
+	</div>
+	<main class="mdl-layout__content">
+		<div class="page-content">
+			<div id="isbn-menu" class="mdl-grid mdl-shadow--2dp">
+				<div class="mdl-cell mdl-cell--11-col-desktop mdl-cell--7-col-tablet mdl-cell--3-col-phone mdl-textfield mdl-js-textfield mdl-textfield--floating-label" >
+					<input class="mdl-textfield__input" type="text" ng-model="isbn" pattern="^([0-9]{13})$|^([0-9]{3}-[0-9]{10})$|^([0-9]{10})$" ng-change="search()" autofocus required>
+					<label class="mdl-textfield__label" for="isbn">ISBN</label>
+					<span class="mdl-textfield__error">Veuillez saisir l'ISBN</span>
+				</div>
+				<div class="mdl-cell mdl-cell--1-col">
+					<div id="spinner" class="mdl-spinner mdl-js-spinner is-active" hidden></div>
+				</div>
+			</div>
+
+			<div class="mdl-grid" ng-show="books.length">
+				<div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--8dp" ng-repeat="book in books | orderBy:myOrder">
+					<div class="mdl-card__title">
+						<h2 class="mdl-card__title-text">{{book.title}}</h2>
+					</div>
+					<div class="mdl-card__supporting-text mdl-grid mdl-card--expand">
+						<img class="mdl-cell mdl-cell--4-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-cell--middle" src="{{book.thumbnail}}" alt="{{book.title}} cover" ng-if="book.thumbnail">
+						<div class="mdl-cell mdl-cell--middle" ng-class="{'mdl-cell--8-col-desktop mdl-cell--hide-tablet mdl-cell--hide-phone':book.thumbnail, 'mdl-cell--12-col':book.thumbnail==null}">
+							{{book.description | limitTo:300}}
+						</div>
+					</div>
+					<div class="mdl-card__actions mdl-card--border">
+						<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="addBook(book)">
+							Ajouter
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<h2 id="info-search" ng-if="books.length == 0">
+				Pas de résultat
+			</h2>
+		</div>
+	</main>
+	<footer class="mdl-mini-footer">
+		<div class="mdl-mini-footer__left-section">
+			<div class="mdl-logo">Ma Bibliothèque</div>
+			<ul class="mdl-mini-footer__link-list">
+				<li><a href="#">Help</a></li>
+			</ul>
+		</div>
+	</footer>
+</div>
+<script src="../js/search.js"></script>
