@@ -82,6 +82,7 @@ angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http) {
 		console.log("Sort on : %O", x);
 		$scope.myOrder = x;
 	};
+	// VIDAGE DE LA BIBLIOTHEQUE
 	$scope.clear = function() {
 		console.log("Vidage de la bibliothèque");
 		$scope.books = $scope.books = [];

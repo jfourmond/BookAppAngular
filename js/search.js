@@ -7,6 +7,7 @@ var spinner = document.querySelector("#spinner");
 angular.module("BookApp").controller('SearchCtrl', function ($scope, $http) {
 	// INITIALISATION
 	$scope.books = [ ];
+	//	RECHERCHE DE LIVRES CORRESPONDANT A L'ISBN
 	$scope.search = function() {
 		if($scope.isbn) {
 			var isbn = $scope.isbn;
@@ -31,7 +32,13 @@ angular.module("BookApp").controller('SearchCtrl', function ($scope, $http) {
 				});
 		}
 	}
+	// AJOUT DU LIVRE
 	$scope.addBook = function(book) {
 		console.log("Ajout du livre : %O", book);
 	}
+	// TRI DES LIVRES
+	$scope.sort = function(x) {
+		console.log("Sort on : %O", x);
+		$scope.myOrder = x;
+	};
 });
