@@ -17,7 +17,7 @@
 				<span class="mdl-layout-title">Ma Bibliothèque - {{books.length}} livres</span>
 				<div class="mdl-layout-spacer"></div>
 				<nav class="mdl-navigation">
-					<div id="search-box" class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label">
+					<div id="search-box" class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label menu-button">
 						<label class="mdl-button mdl-js-button mdl-button--icon" for="search_waterfall">
 								<i class="material-icons">search</i>
 							</label>
@@ -25,7 +25,7 @@
 							<input class="mdl-textfield__input" type="text" name="search" id="search_waterfall" ng-model="searchText">
 						</div>
 					</div>
-					<button id="sort-menu" class="mdl-button mdl-js-button mdl-button--icon">
+					<button id="sort-menu" class="mdl-button mdl-js-button mdl-button--icon menu-button">
 							<i class="material-icons">sort</i>
 						</button>
 					<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="sort-menu">
@@ -34,11 +34,16 @@
 						<li class="mdl-menu__item" ng-click="sort('publisher')">Editeur</li>
 						<li class="mdl-menu__item" ng-click="sort('title')">Titre</li>
 					</ul>
-					<button id="more-menu" class="mdl-button mdl-js-button mdl-button--icon">
+
+					<button id="more-menu" class="mdl-button mdl-js-button mdl-button--icon menu-button">
 							<i class="material-icons">more_vert</i>
 						</button>
 					<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="more-menu">
 						<li class="mdl-menu__item" ng-click="clear()">Vider</li>
+						<li class="mdl-menu__item" ng-click="exportLibrary()">Exporter</li>
+						<label class="mdl-menu__item">
+							Importer <input id="import-file" type="file" style="display: none;" accept=".json" onchange="angular.element(this).scope().onFileImported(this)">
+						</label>
 					</ul>
 				</nav>
 			</div>

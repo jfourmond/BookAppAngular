@@ -196,4 +196,32 @@ bookApp.controller('BookCtrl', function ($scope, $http) {
 		snackbar.MaterialSnackbar.showSnackbar(dataSnackbarDeleted);
 		localStorage.setItem('books', JSON.stringify($scope.books));
 	};
+	//	IMPORTATION DE LA BIBLIOTHEQUE
+	$scope.onFileImported = function(files) {
+		console.log("Importation d'une bibliothèque");
+		var file = files.files[0];
+		var reader = new FileReader();
+		reader.onloadend = function(evt) {
+			if(evt.target.readyState === FileReader.DONE) {
+				var list = JSON.parse(evt.target.result);
+				for(var l of list)
+					$scope.books.push(Object.assign(new Book, l));
+				$scope.$apply();
+			}
+		}
+		reader.readAsText(file);
+		inputFile.value = null;
+	};
+	//	EXPORTATION DE LA BIBLIOTHEQUE
+	$scope.exportLibrary = function() {
+		console.log("Exportation de la bibliothèque")
+		var jsonData = angular.toJson($scope.books, true);
+		var blob = new Blob([jsonData],{
+			type: "application/json;charset=utf-8;"
+		});
+		var downloadLink = document.createElement('a');
+		downloadLink.setAttribute('download', 'Library.json');
+		downloadLink.setAttribute('href', window.URL.createObjectURL(blob));
+		downloadLink.click();
+	};
 });
