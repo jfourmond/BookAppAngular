@@ -1,20 +1,17 @@
 'use strict';
 
-/*	PROGRESS BAR */
-var spinner = document.querySelector("#spinner");
-
-/*	TOAST ET SNACKBAR	*/
-var snackbar = document.querySelector('#snackbar');
-
-/*	DIALOG	*/
-var recordDialog = document.querySelector('#record-dialog');
-if(!recordDialog.showModal)
-	dialogPolyfill.registerDialog(recordDialog);
-recordDialog.querySelector(".close").addEventListener('click', function() {
-	recordDialog.close();
-})
-
 bookApp.controller('LibraryCtrl', function ($scope, $http) {
+	/*	PROGRESS BAR */
+	var spinner = document.querySelector("#spinner");
+	/*	TOAST ET SNACKBAR	*/
+	var snackbar = document.querySelector('#snackbar');
+	/*	DIALOG	*/
+	var recordDialog = document.querySelector('#record-dialog');
+	if(!recordDialog.showModal)
+		dialogPolyfill.registerDialog(recordDialog);
+	recordDialog.querySelector(".close").addEventListener('click', function() {
+		recordDialog.close();
+	})
 	// INITIALISATION OU CHARGEMENT DES DONNEES
 	if(localStorage.getItem('books') != null) {
 		var objs = [];
