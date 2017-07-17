@@ -77,7 +77,7 @@ var bookApp = angular.module("BookApp", ["ngRoute"]);
 bookApp.config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider
-			.when("/home", {
+			.when("/", {
 				templateUrl : "index.html"
 			});
 	}
