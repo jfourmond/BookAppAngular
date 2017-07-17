@@ -63,11 +63,11 @@ bookApp.config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider
 			.when("/home", {
-				templateUrl : "index.html",
+				templateUrl : "templates/library.html",
 				controller : "LibraryCtrl"
 			})
 			.when("/search", {
-				templateUrl : "search.html",
+				templateUrl : "templates/search.html",
 				controller : "SearchCtrl"
 			})
 			.otherwise({
