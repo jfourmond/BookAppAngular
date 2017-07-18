@@ -1,20 +1,15 @@
 'use strict';
 
-/*	PROGRESS BAR */
-var spinner = document.querySelector("#spinner");
-
-/*	TOAST ET SNACKBAR	*/
-var snackbar = document.querySelector('#snackbar');
-
-/*	DIALOG	*/
-var recordDialog = document.querySelector('#record-dialog');
-if(!recordDialog.showModal)
-	dialogPolyfill.registerDialog(recordDialog);
-recordDialog.querySelector(".close").addEventListener('click', function() {
-	recordDialog.close();
-})
-
-angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http) {
+angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http, sendBook) {
+	/*	SNACKBAR */
+	var snackBar = document.querySelector("#snackbar");
+	/*	DIALOG	*/
+	var recordDialog = document.querySelector('#record-dialog');
+	if(!recordDialog.showModal)
+		dialogPolyfill.registerDialog(recordDialog);
+	recordDialog.querySelector(".close").addEventListener('click', function() {
+		recordDialog.close();
+	});
 	// INITIALISATION OU CHARGEMENT DES DONNEES
 	if(localStorage.getItem('books') != null) {
 		var objs = [];
@@ -27,44 +22,25 @@ angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http) {
 		$scope.books = [ ];
 	}
 	// AJOUT D'UN LIVRE
-	$scope.addBook = function () {
-		if($scope.addBookForm.$valid) {
-			var isbn = addBookForm.isbn.value;
-			var isbn = isbn.replace('-', '');
-			console.log("Recherche de l'ISBN : " + isbn);
-			spinner.hidden = false;
-			$http.get("https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn)
-				.then(function success(response) {
-					var data = response.data;
-					console.log("Réponse de l'API : %O", response.data);
-					if(data.totalItems != 0) {
-						var newBook = treatmentItems(data.items);
-						console.log("Ajout du livre : %O", newBook);
-						$scope.books.push(newBook);
-						var dataSnackbarAdded = {
-							message: newBook.title + " ajouté",
-							actionHandler: function(event) {
-								console.log("Annulation de l'ajout du livre : %O", newBook);
-								var index = $scope.books.indexOf(newBook);
-								$scope.books.splice(index, 1);
-								$scope.$apply();
-								snackbar.MaterialSnackbar.cleanup_()
-							},
-							actionText: 'Annuler',
-							timeout: 10000
-						};
-						addDialog.close();
-						snackbar.MaterialSnackbar.showSnackbar(dataSnackbarAdded);
-						addBookForm.reset();
-						localStorage.setItem('books', JSON.stringify($scope.books));
-					} else {
-						console.log("Aucun livre ne correspond à l'isbn " +  isbn);
-					}
-					spinner.hidden = true;
-				}, function failure(response) {
-					spinner.hidden = true;
-				});
-		}
+	$scope.addBook = function (book) {
+		console.log("Ajout du livre : %O", newBook);
+		$scope.books.push(book);
+		var dataSnackbarAdded = {
+			message: newBook.title + " ajouté",
+			actionHandler: function(event) {
+				console.log("Annulation de l'ajout du livre : %O", newBook);
+				var index = $scope.books.indexOf(newBook);
+				$scope.books.splice(index, 1);
+				$scope.$apply();
+				snackbar.MaterialSnackbar.cleanup_();
+				localStorage.setItem('books', JSON.stringify($scope.books));
+			},
+			actionText: 'Annuler',
+			timeout: 10000
+		};
+
+		snackBar.MaterialSnackbar.showSnackbar(dataSnackbarAdded);
+		localStorage.setItem('books', JSON.stringify($scope.books));
 	};
 	// FAVORISATION D'UN LIVRE
 	$scope.favoriteBook = function(book) {
@@ -136,7 +112,7 @@ angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http) {
 			}
 		}
 		reader.readAsText(file);
-		inputFile.value = null;
+		localStorage.setItem('books', JSON.stringify($scope.books));
 	};
 	//	EXPORTATION DE LA BIBLIOTHEQUE
 	$scope.exportLibrary = function() {
@@ -150,4 +126,10 @@ angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http) {
 		downloadLink.setAttribute('href', window.URL.createObjectURL(blob));
 		downloadLink.click();
 	};
+
+	if(sendBook.get() != null) {
+		var newBook = sendBook.get();
+		console.log(newBook);
+		$scope.addBook(newBook);
+	}
 });

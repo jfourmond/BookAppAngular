@@ -1,3 +1,5 @@
+'use strict';
+
 /*	CLASSE	*/
 class Book {
 	constructor(isbn, title, author, publisher, publishedDate, description, pageCount, thumbnail, favorite, addedDate) {

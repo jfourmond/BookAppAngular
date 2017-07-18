@@ -1,10 +1,8 @@
 'use strict';
 
-/*	PROGRESS BAR	*/
-var spinner = document.querySelector("#spinner");
-
-/*	CONTROLLER	*/
-angular.module("BookApp").controller('SearchCtrl', function ($scope, $http) {
+angular.module("BookApp").controller('SearchCtrl', function ($scope, $http, sendBook) {
+	/*	PROGRESS BAR	*/
+	var spinner = document.querySelector("#spinner");
 	// INITIALISATION
 	$scope.books = [ ];
 	//	RECHERCHE DE LIVRES CORRESPONDANT A L'ISBN
@@ -35,6 +33,8 @@ angular.module("BookApp").controller('SearchCtrl', function ($scope, $http) {
 	// AJOUT DU LIVRE
 	$scope.addBook = function(book) {
 		console.log("Ajout du livre : %O", book);
+		sendBook.set(book);
+		window.location.href = "#!home";
 	}
 	// TRI DES LIVRES
 	$scope.sort = function(x) {
