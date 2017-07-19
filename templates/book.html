@@ -1,0 +1,49 @@
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	<header class="mdl-layout__header mdl-layout__header--scroll">
+		<div class="mdl-layout__header-row">
+			<span class="mdl-layout-title">{{book.title}}</span>
+			<div class="mdl-layout-spacer"></div>
+			<nav class="mdl-navigation">
+				<button id="more-menu" class="mdl-button mdl-js-button mdl-button--icon menu-button">
+					<i class="material-icons">more_vert</i>
+				</button>
+				<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="more-menu">
+					<li class="mdl-menu__item" ng-click="clear()">Vider</li>
+					<li class="mdl-menu__item" ng-click="exportLibrary()">Exporter</li>
+					<label class="mdl-menu__item">
+						Importer <input id="import-file" type="file" style="display: none;" accept=".json" onchange="angular.element(this).scope().onFileImported(this)">
+					</label>
+				</ul>
+			</nav>
+		</div>
+	</header>
+	<div class="mdl-layout__drawer">
+		<span class="mdl-layout-title">Menu</span>
+			<nav class="mdl-navigation">
+				<a class="mdl-navigation__link" href="#!home">Bibliothèque</a>
+				<a class="mdl-navigation__link" href="#!search">Rechercher</a>
+			</nav>
+		</div>
+	<main class="mdl-layout__content">
+		<div class="page-content">
+			<div class="mdl-grid">
+				<img class="mdl-cell mdl-cell--4-col-desktop mdl-cell--2-col-tablet mdl-cell--1-col-phone mdl-cell--middle mdl-shadow--8dp" ng-src="{{book.thumbnail}}" alt="{{book.title}} cover" ng-if="book.thumbnail">
+				<div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+					<h5>{{book.author}}</h5>
+					<h6>{{book.publisher}}, {{book.publishedDate | date:'yyyy'}} - {{book.pageCount}} pages</h6>
+					<blockquote id="book-description">{{book.description}}</blockquote>
+				</div>
+			</div>
+		</div>
+	</main>
+	<footer class="mdl-mini-footer">
+		<div class="mdl-mini-footer__left-section">
+			<div class="mdl-logo">Ma Bibliothèque</div>
+			<ul class="mdl-mini-footer__link-list">
+				<li><a href="#">A Propos</a></li>
+				<li><a href="#">Help</a></li>
+				<li><a href="https://github.com/jfourmond/BookAppAngular">Code Source</a></li>
+			</ul>
+		</div>
+	</footer>
+</div>

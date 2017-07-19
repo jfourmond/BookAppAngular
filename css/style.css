@@ -7,17 +7,9 @@
 	position: fixed;
 	bottom: 0;
 	right: 0;
-	margin-bottom: 10rem;
-	margin-right: 10rem;
+	margin-bottom: 10%;
+	margin-right: 10%;
 	z-index: 10;
-}
-
-#add-dialog {
-	width:50%;
-}
-
-#record-dialog {
-	width:50%;
 }
 
 .mdl-card:hover {
@@ -56,3 +48,5 @@
 #info-search {
 	text-align:center
 }
+
+/**	STYLE : book.html	**/

@@ -1,28 +1,28 @@
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 	<header class="mdl-layout__header mdl-layout__header--scroll">
 		<div class="mdl-layout__header-row">
-			<span class="mdl-layout-title">Ma Bibliothèque - Recherche</span>
+			<span class="mdl-layout-title">Recherche</span>
 			<div class="mdl-layout-spacer"></div>
 			<nav class="mdl-navigation">
 				<div id="search-box" class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label menu-button">
 					<label class="mdl-button mdl-js-button mdl-button--icon" for="search_waterfall">
-							<i class="material-icons">search</i>
-						</label>
+						<i class="material-icons">search</i>
+					</label>
 					<div class="mdl-textfield__expandable-holder">
 						<input class="mdl-textfield__input" type="text" name="search" id="search_waterfall" ng-model="searchText">
 					</div>
 				</div>
 				<button id="sort-menu" class="mdl-button mdl-js-button mdl-button--icon menu-button">
-						<i class="material-icons">sort</i>
-					</button>
+					<i class="material-icons">sort</i>
+				</button>
 				<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="sort-menu">
 					<li class="mdl-menu__item" ng-click="sort('author')">Auteur</li>
 					<li class="mdl-menu__item" ng-click="sort('publisher')">Editeur</li>
 					<li class="mdl-menu__item" ng-click="sort('title')">Titre</li>
 				</ul>
 				<button id="more-menu" class="mdl-button mdl-js-button mdl-button--icon menu-button">
-						<i class="material-icons">more_vert</i>
-					</button>
+					<i class="material-icons">more_vert</i>
+				</button>
 				<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="more-menu">
 					<li class="mdl-menu__item" ng-click="clear()">Vider</li>
 					<li class="mdl-menu__item" ng-click="exportLibrary()">Exporter</li>
@@ -80,7 +80,9 @@
 		<div class="mdl-mini-footer__left-section">
 			<div class="mdl-logo">Ma Bibliothèque</div>
 			<ul class="mdl-mini-footer__link-list">
+				<li><a href="#">A Propos</a></li>
 				<li><a href="#">Help</a></li>
+				<li><a href="https://github.com/jfourmond/BookAppAngular">Code Source</a></li>
 			</ul>
 		</div>
 	</footer>

@@ -5,6 +5,7 @@ angular.module("BookApp").service('sendBook', function() {
 
 	return {
 		get: function() { return bookSend; },
-		set: function(book) { bookSend= book; }
+		is: function() { return bookSend != null},
+		set: function(book) { bookSend = book; }
 	};
 });

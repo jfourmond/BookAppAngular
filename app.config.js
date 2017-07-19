@@ -11,6 +11,10 @@ angular.module("BookApp").config(['$routeProvider',
 			templateUrl: 'templates/search.html',
 			controller: 'SearchCtrl'
 		})
+		.when('/book/:isbn', {
+			templateUrl: 'templates/book.html',
+			controller: 'BookCtrl'
+		})
 		.otherwise({
 			redirectTo: '/home'
 		});

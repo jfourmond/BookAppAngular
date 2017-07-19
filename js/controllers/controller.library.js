@@ -1,26 +1,17 @@
 'use strict';
 
-angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http, sendBook) {
+angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http, sendBook, saveLoad) {
 	/*	SNACKBAR */
 	var snackBar = document.querySelector("#snackbar");
-	/*	DIALOG	*/
-	var recordDialog = document.querySelector('#record-dialog');
-	if(!recordDialog.showModal)
-		dialogPolyfill.registerDialog(recordDialog);
-	recordDialog.querySelector(".close").addEventListener('click', function() {
-		recordDialog.close();
-	});
 	// INITIALISATION OU CHARGEMENT DES DONNEES
-	if(localStorage.getItem('books') != null) {
+	if(saveLoad.saved()) {
 		var objs = [];
-		for(var obj of JSON.parse(localStorage.getItem('books'))){
+		for(var obj of saveLoad.load())
 			objs.push(Object.assign(new Book, obj));
-		}
 		console.log("%O", objs);
 		$scope.books = objs;
-	} else {
+	} else
 		$scope.books = [ ];
-	}
 	// AJOUT D'UN LIVRE
 	$scope.addBook = function (book) {
 		console.log("Ajout du livre : %O", newBook);
@@ -33,14 +24,13 @@ angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http, sen
 				$scope.books.splice(index, 1);
 				$scope.$apply();
 				snackbar.MaterialSnackbar.cleanup_();
-				localStorage.setItem('books', JSON.stringify($scope.books));
+				saveLoad.save($scope.books);
 			},
 			actionText: 'Annuler',
 			timeout: 10000
 		};
-
 		snackBar.MaterialSnackbar.showSnackbar(dataSnackbarAdded);
-		localStorage.setItem('books', JSON.stringify($scope.books));
+		saveLoad.save($scope.books);
 	};
 	// FAVORISATION D'UN LIVRE
 	$scope.favoriteBook = function(book) {
@@ -51,7 +41,7 @@ angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http, sen
 			console.log("Favorisation du livre : %O", book);
 			book.favorite = true;
 		}
-		localStorage.setItem('books', JSON.stringify($scope.books));
+		saveLoad.save($scope.books);
 	};
 	// TRI DES LIVRES
 	$scope.sort = function(x) {
@@ -62,21 +52,12 @@ angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http, sen
 	$scope.clear = function() {
 		console.log("Vidage de la bibliothèque");
 		$scope.books = $scope.books = [];
-		localStorage.setItem('books', JSON.stringify($scope.books));
+		saveLoad.save($scope.books);
 	}
 	// AFFICHAGE DE LA FICHE COMPLETE D'UN LIVRE
 	$scope.showBook = function(book) {
 		console.log("Affichage du livre : %O", book);
-		recordDialog.querySelector("#title").innerText = book.title;
-		recordDialog.querySelector("#author").innerText = book.author;
-		recordDialog.querySelector("#isbn").innerText = book.isbn + " - " + book.publisher;
-		if(book.thumbnail) {
-			recordDialog.querySelector("#cover").src = book.thumbnail;
-			recordDialog.querySelector("#cover").alt = book.title + " cover";
-		} else
-			recordDialog.querySelector("#cover").hidden = true;
-		recordDialog.querySelector("#description").innerText = book.description;
-		recordDialog.showModal();
+		sendBook.set(book);
 	};
 	// SUPPRESSION D'UN LIVRE
 	$scope.removeBook = function (book) {
@@ -90,13 +71,13 @@ angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http, sen
 				$scope.books.splice(index, 0, book);
 				$scope.$apply();
 				snackbar.MaterialSnackbar.cleanup_();
-				localStorage.setItem('books', JSON.stringify($scope.books));
+				saveLoad.save($scope.books);
 			},
 			actionText: 'Annuler',
 			timeout: 10000
 		};
 		snackbar.MaterialSnackbar.showSnackbar(dataSnackbarDeleted);
-		localStorage.setItem('books', JSON.stringify($scope.books));
+		saveLoad.save($scope.books);
 	};
 	//	IMPORTATION DE LA BIBLIOTHEQUE
 	$scope.onFileImported = function(files) {
@@ -112,7 +93,7 @@ angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http, sen
 			}
 		}
 		reader.readAsText(file);
-		localStorage.setItem('books', JSON.stringify($scope.books));
+		saveLoad.save($scope.books);
 	};
 	//	EXPORTATION DE LA BIBLIOTHEQUE
 	$scope.exportLibrary = function() {
@@ -126,10 +107,9 @@ angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http, sen
 		downloadLink.setAttribute('href', window.URL.createObjectURL(blob));
 		downloadLink.click();
 	};
-
-	if(sendBook.get() != null) {
+	if(sendBook.is()) {
 		var newBook = sendBook.get();
-		console.log(newBook);
 		$scope.addBook(newBook);
+		sendBook.set(null);
 	}
 });
