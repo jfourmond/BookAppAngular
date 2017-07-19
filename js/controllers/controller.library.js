@@ -4,13 +4,9 @@ angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http, sen
 	/*	SNACKBAR */
 	var snackBar = document.querySelector("#snackbar");
 	// INITIALISATION OU CHARGEMENT DES DONNEES
-	if(saveLoad.saved()) {
-		var objs = [];
-		for(var obj of saveLoad.load())
-			objs.push(Object.assign(new Book, obj));
-		console.log("%O", objs);
-		$scope.books = objs;
-	} else
+	if(saveLoad.saved())
+		$scope.books = saveLoad.load();
+	else
 		$scope.books = [ ];
 	// AJOUT D'UN LIVRE
 	$scope.addBook = function (book) {
@@ -62,7 +58,7 @@ angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http, sen
 	// SUPPRESSION D'UN LIVRE
 	$scope.removeBook = function (book) {
 		console.log("Suppression du livre : %O", book);
-		var index = $scope.books.indexOf(book);
+		var index = $scope.books.findIndex(b => b.isbn == book.isbn);
 		$scope.books.splice(index, 1);
 		var dataSnackbarDeleted = {
 			message: book.title + " supprimé",
@@ -90,10 +86,10 @@ angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http, sen
 				for(var l of list)
 					$scope.books.push(Object.assign(new Book, l));
 				$scope.$apply();
+				saveLoad.save($scope.books);
 			}
 		}
 		reader.readAsText(file);
-		saveLoad.save($scope.books);
 	};
 	//	EXPORTATION DE LA BIBLIOTHEQUE
 	$scope.exportLibrary = function() {
@@ -108,8 +104,11 @@ angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http, sen
 		downloadLink.click();
 	};
 	if(sendBook.is()) {
-		var newBook = sendBook.get();
-		$scope.addBook(newBook);
+		var book = sendBook.get();
+		if(sendBook.isAddition())
+			$scope.addBook(book);
+		else
+			$scope.removeBook(book);
 		sendBook.set(null);
 	}
 });
