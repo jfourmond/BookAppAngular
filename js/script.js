@@ -25,7 +25,6 @@ function treatmentItems(items) {
 }
 
 function treatmentItem(item) {
-	// console.log(items);
 	var volume = item.volumeInfo;
 	var isbn = treatmentISBN13(volume.industryIdentifiers);
 	var title = volume.title;
@@ -51,6 +50,7 @@ function treatmentISBN13(industryIdentifiers) {
 }
 
 function treatmentAuthors(authors) {
+	if(authors == null) return null;
 	var author = authors[0];
 	for(var i=1; i < authors.size ; i++)
 		author = author + ", " + authors[i];

@@ -33,7 +33,7 @@ angular.module("BookApp").controller('SearchCtrl', function ($scope, $http, send
 	// AJOUT DU LIVRE
 	$scope.addBook = function(book) {
 		console.log("Ajout du livre : %O", book);
-		sendBook.set(book);
+		sendBook.set(book, true);
 		window.location.href = "#!home";
 	}
 	// TRI DES LIVRES

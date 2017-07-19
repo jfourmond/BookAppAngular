@@ -10,13 +10,13 @@ angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http, sen
 		$scope.books = [ ];
 	// AJOUT D'UN LIVRE
 	$scope.addBook = function (book) {
-		console.log("Ajout du livre : %O", newBook);
+		console.log("Ajout du livre : %O", book);
 		$scope.books.push(book);
 		var dataSnackbarAdded = {
-			message: newBook.title + " ajouté",
+			message: book.title + " ajouté",
 			actionHandler: function(event) {
-				console.log("Annulation de l'ajout du livre : %O", newBook);
-				var index = $scope.books.indexOf(newBook);
+				console.log("Annulation de l'ajout du livre : %O", book);
+				var index = $scope.books.indexOf(book);
 				$scope.books.splice(index, 1);
 				$scope.$apply();
 				snackbar.MaterialSnackbar.cleanup_();
