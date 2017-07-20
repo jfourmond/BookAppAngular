@@ -22,7 +22,9 @@
 					<li class="mdl-menu__item" ng-click="sort('publisher')">Editeur</li>
 					<li class="mdl-menu__item" ng-click="sort('title')">Titre</li>
 				</ul>
-
+				<button class="mdl-button mdl-js-button mdl-button--icon menu-button" ng-click="switchView()">
+					<i class="material-icons">{{ list ? "view_list" : "dashboard"}}</i>
+				</button>
 				<button id="more-menu" class="mdl-button mdl-js-button mdl-button--icon menu-button">
 					<i class="material-icons">more_vert</i>
 				</button>
@@ -42,8 +44,9 @@
 				Votre bibliothèque est vide !
 			</h3>
 
-			<div class="mdl-grid" ng-show="books.length">
-				<div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--8dp" ng-repeat="book in books | orderBy:myOrder | filter:searchText track by $index">
+			<!--	CARTES	-->
+			<div class="mdl-grid" ng-show="books.length && !list">
+				<div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--8dp" ng-repeat="book in books | orderBy:order:reverse | filter:searchText track by $index">
 					<div class="mdl-card__title">
 						<h2 class="mdl-card__title-text">{{book.title}}</h2>
 					</div>
@@ -67,6 +70,27 @@
 					</div>
 				</div>
 			</div>
+
+			<!--	LISTE	-->
+			<ul id="book-list" class="mdl-list" ng-show="books.length && list">
+				<li class="mdl-list__item mdl-list__item--three-line mdl-shadow--2dp" ng-repeat="book in books | orderBy:order:reverse | filter:searchText track by $index">
+					<span class="mdl-list__item-primary-content" ng-click="showBook(book);">
+						<img class="mdl-list__item-avatar" ng-src="{{book.thumbnail}}" alt="{{book.title}} cover" ng-if="book.thumbnail">
+						<span>{{book.title}}</span>
+						<span class="mdl-list__item-text-body ">
+							{{book.author}}<br/>
+						</span>
+					</span>
+					<span class="mdl-list__item-secondary-content">
+						<button class="mdl-button mdl-button--icon mdl-button--colored mdl-js-button" ng-click="favoriteBook(book)">
+							<i class="material-icons">{{ book.favorite ? "favorite" : "favorite_border" }}</i>
+						</button>
+						<button class="mdl-button mdl-button--icon mdl-button--colored mdl-js-button mdl-js-ripple-effect" ng-click="removeBook(book)">
+							<i class="material-icons">delete</i>
+						</button>
+					</span>
+				</li>
+			</ul>
 
 			<a id="add-button" href="#!search" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
 				<i class="material-icons">add</i>

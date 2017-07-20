@@ -1,14 +1,27 @@
 'use strict';
 
-angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http, sendBook, saveLoad) {
+angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http, sendBook, saveLoad, settings) {
 	/*	SNACKBAR */
 	var snackBar = document.querySelector("#snackbar");
+	/*	AFFICHAGE EN CARTE OU LISTE	*/
+	if(settings.saved("list"))
+		$scope.list = settings.load("list");
+	else
+		$scope.list = false;
+	/*	VARIABLE DE TRI	*/
+	$scope.reverse=false;
 	// INITIALISATION OU CHARGEMENT DES DONNEES
 	if(saveLoad.saved())
 		$scope.books = saveLoad.load();
 	else
 		$scope.books = [ ];
 	console.log("BOOKS : %O", $scope.books);
+	//	CHANGEMENT DE TYPE D'AFFICHAGE
+	$scope.switchView = function() {
+		console.log("Changement d'affichage");
+		$scope.list = !$scope.list;
+		settings.save("list", $scope.list);
+	}
 	// AJOUT D'UN LIVRE
 	$scope.addBook = function (book) {
 		console.log("Ajout du livre : %O", book);
@@ -42,8 +55,13 @@ angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http, sen
 	};
 	// TRI DES LIVRES
 	$scope.sort = function(x) {
-		console.log("Sort on : %O", x);
-		$scope.myOrder = x;
+		if(x == $scope.order) {
+			$scope.reverse = !$scope.reverse;
+		} else {
+			$scope.order = x;
+			$scope.reverse = false;
+		}
+		console.log("Sort on : %O, reversed : %O", $scope.order, $scope.reverse);
 	};
 	// VIDAGE DE LA BIBLIOTHEQUE
 	$scope.clear = function() {
@@ -54,7 +72,7 @@ angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http, sen
 	// AFFICHAGE DE LA FICHE COMPLETE D'UN LIVRE
 	$scope.showBook = function(book) {
 		console.log("Affichage du livre : %O", book);
-		sendBook.set(book);
+		window.location.href = '#!book/'+book.isbn;
 	};
 	// SUPPRESSION D'UN LIVRE
 	$scope.removeBook = function (book) {

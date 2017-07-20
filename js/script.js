@@ -20,7 +20,11 @@ class Book {
 function treatmentItems(items) {
 	var books = [];
 	for(var item of items)
-		books.push(treatmentItem(item));
+		try {
+			books.push(treatmentItem(item));
+		} catch(e) {
+			console.error(e);
+		}
 	return books;
 }
 
@@ -46,6 +50,7 @@ function treatmentISBN13(industryIdentifiers) {
 	for(var id of industryIdentifiers)
 		if(id.type == "ISBN_13")
 			isbn = id.identifier;
+	console.log(isbn);
 	return isbn;
 }
 

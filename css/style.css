@@ -18,7 +18,7 @@
 }
 
 .mdl-card:hover > .mdl-card__title{
-	background-color: #5C6BC0;
+	background-color: #3949AB;
 }
 
 .mdl-card__title {
@@ -34,6 +34,18 @@
 .mdl-card__actions > .mdl-button--icon {
 	margin-right: 3px;
 	margin-left: 3px;
+}
+
+#book-list {
+	margin:auto;
+	margin-top:2rem;
+
+	width:90%;
+}
+
+.mdl-list__item:hover {
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+	cursor: pointer;
 }
 
 /**	STYLE : library.html	**/
