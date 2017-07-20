@@ -38,6 +38,10 @@
 	</header>
 	<main class="mdl-layout__content">
 		<div class="page-content">
+			<h3 id="info-library" ng-if="books.length == 0">
+				Votre bibliothèque est vide !
+			</h3>
+
 			<div class="mdl-grid" ng-show="books.length">
 				<div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--8dp" ng-repeat="book in books | orderBy:myOrder | filter:searchText track by $index">
 					<div class="mdl-card__title">
@@ -73,8 +77,7 @@
 		<div class="mdl-mini-footer__left-section">
 			<div class="mdl-logo">Ma Bibliothèque</div>
 			<ul class="mdl-mini-footer__link-list">
-				<li><a href="#">A Propos</a></li>
-				<li><a href="#">Help</a></li>
+				<li><a href="#!about">A Propos</a></li>
 				<li><a href="https://github.com/jfourmond/BookAppAngular">Code Source</a></li>
 			</ul>
 		</div>

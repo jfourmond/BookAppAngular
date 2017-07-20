@@ -19,10 +19,11 @@
 	<main class="mdl-layout__content">
 		<div class="page-content">
 			<div class="mdl-grid">
-				<img class="mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-tablet mdl-cell--1-col-phone mdl-cell--middle mdl-shadow--8dp" ng-src="{{book.thumbnail}}" alt="{{book.title}} cover" ng-if="book.thumbnail">
-				<div class="mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+				<img class="mdl-cell mdl-cell--2-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-cell--middle mdl-shadow--8dp" ng-src="{{book.thumbnail}}" alt="{{book.title}} cover" ng-if="book.thumbnail">
+				<div class="mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
 					<h5>{{book.author}}</h5>
 					<h6>{{book.publisher}}, {{book.publishedDate | date:'yyyy'}} - {{book.pageCount}} pages</h6>
+					<h6>ISBN-13 : {{book.isbn}}</h6>
 					<blockquote id="book-description">{{book.description}}</blockquote>
 				</div>
 			</div>
@@ -32,8 +33,7 @@
 		<div class="mdl-mini-footer__left-section">
 			<div class="mdl-logo">Ma Bibliothèque</div>
 			<ul class="mdl-mini-footer__link-list">
-				<li><a href="#">A Propos</a></li>
-				<li><a href="#">Help</a></li>
+				<li><a href="#!about">A Propos</a></li>
 				<li><a href="https://github.com/jfourmond/BookAppAngular">Code Source</a></li>
 			</ul>
 		</div>

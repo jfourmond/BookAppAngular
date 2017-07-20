@@ -8,6 +8,7 @@ angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http, sen
 		$scope.books = saveLoad.load();
 	else
 		$scope.books = [ ];
+	console.log("BOOKS : %O", $scope.books);
 	// AJOUT D'UN LIVRE
 	$scope.addBook = function (book) {
 		console.log("Ajout du livre : %O", book);

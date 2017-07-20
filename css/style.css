@@ -36,6 +36,12 @@
 	margin-left: 3px;
 }
 
+/**	STYLE : library.html	**/
+#info-library {
+	text-align:center;
+	margin-top:8rem;
+}
+
 /**	STYLE : search.html	**/
 #isbn-menu > div {
 	text-align: center;
@@ -46,6 +52,7 @@
 }
 
 #info-search {
+	margin-top:8rem;
 	text-align:center
 }
 

@@ -15,6 +15,9 @@ angular.module("BookApp").config(['$routeProvider',
 			templateUrl: 'templates/book.html',
 			controller: 'BookCtrl'
 		})
+		.when('/about', {
+			templateUrl: 'templates/about.html'
+		})
 		.otherwise({
 			redirectTo: '/home'
 		});
