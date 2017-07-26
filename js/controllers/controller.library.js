@@ -65,9 +65,26 @@ angular.module("BookApp").controller('LibraryCtrl', function ($scope, $http, sen
 	};
 	// VIDAGE DE LA BIBLIOTHEQUE
 	$scope.clear = function() {
-		console.log("Vidage de la bibliothèque");
-		$scope.books = $scope.books = [];
-		saveLoad.save($scope.books);
+		var r = confirm("Confirmer le vidage de la bibliothèque");
+		if (r == true) {
+			console.log("Vidage de la bibliothèque");
+			var saved = $scope.books;
+			var dataSnackbarCleared = {
+				message: "Bibliothèque vidée",
+				actionHandler: function(event) {
+					console.log("Annulation du vidage de la bibliothèque");
+					$scope.books = saved;
+					$scope.$apply();
+					snackbar.MaterialSnackbar.cleanup_();
+					saveLoad.save($scope.books);
+				},
+				actionText: 'Annuler',
+				timeout: 10000
+			};
+			$scope.books = $scope.books = [];
+			snackbar.MaterialSnackbar.showSnackbar(dataSnackbarCleared);
+			saveLoad.save($scope.books);
+		}
 	}
 	// AFFICHAGE DE LA FICHE COMPLETE D'UN LIVRE
 	$scope.showBook = function(book) {
